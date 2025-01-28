@@ -1,27 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import-normalize;
+/* globals.css */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html, body {
+  width: 100%;   /* Ensure full width */
+  height: 100%;  /* Ensure full height */
+  margin: 0;     /* Remove default margin */
+  padding: 0;    /* Remove default padding */
+  overflow-x: hidden; /* Prevent horizontal scroll if not needed */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box; /* Ensure that padding and borders are included in width and height calculations */
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}

@@ -1,101 +1,133 @@
-import Image from "next/image";
+"use client";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+
+const MotionButton = motion(Button);
+const MotionAvatar = motion(Avatar);
+const MotionHeader = motion(CardHeader);
+const MotionContent = motion(CardContent);
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isAvatarReduced, setIsAvatarReduced] = useState(false);
+  const [showEmailCard, setShowEmailCard] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const handleButtonClick = () => {
+    setIsAvatarReduced(!isAvatarReduced);
+    // Add a slight delay before showing the email card
+    setTimeout(() => {
+      setShowEmailCard(!showEmailCard);
+    }, 300);
+  };
+
+  return (
+    <div className="h-screen w-full flex justify-center items-center flex-col gap-6 bg-slate-800 relative p-4">
+    <Card className="flex justify-center items-center bg-white w-full max-w-[500px] relative min-h-[400px]  p-4 sm:p-6 md:p-8">
+    <MotionHeader
+className={`flex justify-start items-center w-full absolute ${
+  isAvatarReduced
+    ? "top-0 left-0 flex-row"
+    : "flex-col gap-6"
+}`}
+animate={{
+  y: isAvatarReduced ? 0 : "50%",
+  translateY: isAvatarReduced ? 0 : "-50%",
+}}
+transition={{ duration: 0.5 }}
+>
+<MotionAvatar
+  className={`${
+    isAvatarReduced
+      ? "w-16 h-16 sm:size-20 md:size-24"
+      : "w-32 h-32 sm:size-40 md:size-48"
+  }`}
+  animate={{
+    scale: isAvatarReduced ? 0.9 : 1,
+  }}
+  transition={{ duration: 0.5 }}
+>
+  <AvatarImage src="assets/profile-pic.png" alt="Profile" />
+  <AvatarFallback>AB</AvatarFallback>
+</MotionAvatar>
+<MotionContent
+  className={`text-4xl font-bold flex justify-center items-center text-center ml-4 text-nowrap ${
+    isAvatarReduced
+      ? "text-2xl sm:text-3xl md:text-4xl"
+      : "text-4xl mt-4 sm:text-5xl md:text-6xl"
+  }`}
+  animate={{
+    scale: isAvatarReduced ? 0.7 : 1,
+  }}
+  transition={{ duration: 0.5 }}
+>
+  Check in
+</MotionContent>
+<CardFooter
+  className={`${
+    isAvatarReduced
+      ? "ml-auto mt-2 sm:mt-0"
+      : "mt-6 sm:mt-8 md:mt-10"
+  }`}
+>
+  <MotionButton
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    variant="outline"
+    onClick={handleButtonClick}
+    className="text-sm sm:text-base md:text-lg"
+  >
+    {isAvatarReduced ? "Back" : "Login"}
+  </MotionButton>
+</CardFooter>
+</MotionHeader>
+  
+
+        <AnimatePresence>
+          {showEmailCard && (
+            <motion.div
+              className="flex justify-center items-center flex-col w-full h-3/5 absolute bottom-0 bg-white border-purple-700 border-t-2 rounded-t-lg p-1 sm:p-2"
+              initial={{ y: 300, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 300, opacity: 0 }}
+              transition={{
+                type: "spring",
+                damping: 25,
+                stiffness: 200,
+                duration: 0.5,
+              }}
+            >
+              <MotionHeader className="text-2xl font-bold mb-4 sm:text-3xl">
+                Enter your email
+              </MotionHeader>
+              <CardContent className="w-full">
+                <Input
+                  placeholder="your.email@example.com"
+                  className="w-full text-sm sm:text-base"
+                  type="email"
+                />
+              </CardContent>
+              <CardFooter>
+                <MotionButton
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  variant="default"
+                  className="w-full py-2 sm:py-3 text-sm sm:text-base"
+                >
+                  Continue
+                </MotionButton>
+              </CardFooter>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Card>
     </div>
   );
 }
